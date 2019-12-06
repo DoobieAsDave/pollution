@@ -22,13 +22,14 @@ dynamic.compress();
 //
 
 while(true) {
-    for (0 => int step; step < 8; step++) {
-        1 => adsr.keyOn;
-        key => Std.mtof => voice1.freq;
-        voice1.freq() / 2 => voice2.freq;
-
-        tempo.quarterNote - adsr.releaseTime() => now;
+    for (0 => int step; step < 16; step++) {
+        if (step != 15) key => Std.mtof => voice1.freq;
+        else key + 1 => Std.mtof => voice1.freq;
+        voice1.freq() / 2 => voice2.freq;        
         
+        1 => adsr.keyOn;
+        tempo.quarterNote - adsr.releaseTime() => now;
+            
         1 => adsr.keyOff;
         adsr.releaseTime() => now;
     }

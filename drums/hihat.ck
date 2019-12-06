@@ -6,7 +6,18 @@ SndBuf hihat => dac;
 
 me.dir(-1) + "audio/hihat.wav" => hihat.read;
 hihat.samples() => hihat.pos;
-.25 => hihat.gain;
+0 => hihat.gain;
+
+//
+
+function void modGain(dur duration) {
+    while(hihat.gain() <= .25) {
+        hihat.gain() + .01 => hihat.gain;
+        duration / (.25 / .01) => now;
+    }
+}
+
+spork ~ modGain(tempo.note * 8);
 
 //
 
